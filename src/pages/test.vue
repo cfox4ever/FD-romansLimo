@@ -36,15 +36,26 @@ banner
       
       
     </q-field>
+  <q-btn label="Pickup Location" color="primary" @click="dialog = true" />
+ <q-dialog v-model="dialog"        >
+      <q-card style="width: 700px; max-width: 80vw;">
+        <Address/>
+      </q-card>
+    </q-dialog>
 </div>
 
 </template>
 
 <script setup>
 import {  ref } from 'vue'
+import { useQuasar } from 'quasar'
+import Address from '../components/Booking/Address'
 
-
+const $q = useQuasar()
 const hello = ref("Hello")
 const selected = ref("")
 const options = ref (['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'])
+const address =ref('')
+const dialog = ref(false)
+const cancelEnabled = ref(false)
 </script>

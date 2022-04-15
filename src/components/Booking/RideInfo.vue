@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <q-card dark bordered class="bg-dark my-card">
       <q-card-section>
         <div class="row">
@@ -66,8 +66,8 @@
             v-model="service"
             :options="serviceOptions"
             label="Service"
-                    transition-show="scale"
-        transition-hide="scale"
+            transition-show="scale"
+            transition-hide="scale"
           >
             <template v-slot:prepend>
               <q-icon name="directions_car_filled" />
@@ -168,47 +168,67 @@
             </q-input>
           </div>
         </div>
-
-      <q-separator color="white" inset />
-<Address />
-        
-        
- <q-separator color="green" inset />
-        <div class="row pn-right" v-for="(stop, index) in stops">
-          <q-btn rounded color="amber-12" class="text-black q-ma-xs">
-            Stop # {{ index + 1 }} --> {{ stop }}
-            <q-icon name="delete" color="red" @click="deleteStop" />
-          </q-btn>
-        </div>
-
-        
-          <Address v-model="stop" v-if="addStopField" />
-   
-
-        <div class="frow on-left">
-          <q-btn
-            label=" + Add Stop"
-            color="amber-12"
-            flat
-            @click="addStopField = true"
-          />
-        </div>
-
+                                                      <!-- DISPLAYING DESTINATIONS  -->
         <div class="row">
-          <q-input
-            clearable
-            filled
-            class="col q-ma-xs"
-            label="Drop-off Address"
-            v-model="dropoff"
-            type="text"
-            bg-color="amber-12"
-          >
-            <template v-slot:prepend>
-              <q-icon name="location_off" />
-            </template>
-          </q-input>
+          <div v-for="s in pickup">{{ s }} ,</div>
         </div>
+        <div v-for="(stop, index) in stops">
+          <q-btn rounded color="amber-12" class="text-black q-ma-xs" icon="flag">
+            Stop # {{ index + 1 }} -- >  <div v-for="s in stop">{{ s }} ,</div>
+            <q-icon name="delete" color="red" />
+          </q-btn>
+          
+        </div>
+        <div class="row">
+          <div v-for="s in dropoff">{{ s }} ,</div>
+        </div>
+
+        <!-- PICKUP LOCATION  -->
+        <q-separator color="white" inset />
+
+        <q-btn
+          label="Pickup Location"
+          rounded
+          color="amber-12"
+          class="text-black q-ma-xs"
+          @click="dialog = true"
+          icon="location_on"
+        />
+        <q-dialog v-model="dialog">
+          <q-card style="width: 700px; max-width: 80vw">
+            <Address @formData="getAddress" />
+          </q-card>
+        </q-dialog>
+
+        <!-- ADD STOP  -->
+        <q-btn
+          label="Add Stop"
+          rounded
+          color="amber-12"
+          class="text-black q-ma-xs"
+          @click="dialog = true"
+          icon="flag"
+        />
+        <q-dialog v-model="dialog">
+          <q-card style="width: 700px; max-width: 80vw">
+            <Address @formData="addStop" />
+          </q-card>
+        </q-dialog>
+
+        <!-- DROP OFF  -->
+        <q-btn
+          label="Drop Off Location"
+          rounded
+          color="amber-12"
+          class="text-black q-ma-xs"
+          @click="dialog = true"
+          icon="do_not_disturb_on"
+        />
+        <q-dialog v-model="dialog">
+          <q-card style="width: 700px; max-width: 80vw">
+            <Address @formData="dropOffAddress" />
+          </q-card>
+        </q-dialog>
 
         <div class="row">
           <div class="col">
@@ -299,17 +319,13 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, reactive } from "vue";
-import AddStop from "./AddStop.vue";
+import { ref } from "vue";
 
-import { date } from "quasar";
 import Address from "./Address.vue";
 
 const timeStamp = Date.now();
 
-const addStopField = ref(false);
 const stops = ref([]);
-const stop = ref("");
 
 const fname = ref("");
 const lname = ref("");
@@ -318,8 +334,8 @@ const phone = ref("");
 const service = ref("");
 const fdate = ref("");
 const time = ref("");
-const pickup = ref("");
-const dropoff = ref("");
+const pickup = ref({});
+const dropoff = ref({});
 const passengers = ref("");
 const luggage = ref("");
 const child = ref("");
@@ -337,11 +353,6 @@ const serviceOptions = ref([
   "Other",
 ]);
 
-const addToStops = () => {
-  stops.value.push(stop.value);
-  stop.value = "";
-  addStopField.value = false;
-};
 const deleteStop = (index) => {
   stops.value.splice(index, 1);
 };
@@ -354,77 +365,17 @@ const dateOptions = (fdate) => {
   today = yyyy + "/" + mm + "/" + dd;
   return fdate >= today;
 };
-</script>
-
-<!-- <script>
-export default {
-  data () {
-    return {
-      addStopField: false,
-      stops: [],
-      stop: "",
-      fname: "",
-      lname: "",
-      phone: "",
-      email: "",
-      service: "",
-      fdate: "",
-      time: "",
-      pickup: "",
-      dropoff: "",
-      passengers: "",
-      luggage: "",
-      child: "",
-      instructions: "",
-      accessible: false,
-      serviceOptions: [
-        "Airport Arrival",
-        "Airport Departure",
-        "Point To Point",
-        "Chauffeur Services rental",
-        "Other",
-      ],
-     
-    };
-  },
-
-  methods: {
-    timeStamp () {
-      const current = new Date();
-      const date = `${current.getDate()}/${current.getMonth() + 1
-        }/${current.getFullYear()}`;
-      return date;
-    },
-
-    addToStops: () => {
-      
-      
-      this.stops.push(this.stop);
-      this.stop = "";
-    },
-    deleteStop: (index) => {
-      this.stops.splice(index, 1);
-    },
-
-    formattedDate () {
-      return date.formatDate(timeStamp, "MM-DD-YYYY");
-    },
-    autocomplete () { },
-  },
-  computed: {},
-  mounted () {
-    new google.maps.places.Autocomplete(document.getElementById("Gpickup"));
-  },
-  // watch : {
-  //  pickup : function autocompleteLocation  (e)  {
-  //    var id = e.target.value;
-  //         var name = e.target.options[e.target.options.selectedIndex].text;
-  //         console.log('id ',id );
-  //         console.log('name ',name );
-  // // new google.maps.places.Autocomplete(
-  // //      document.getElementsByName("Gpickup")
-  // //    )
-  //     },
-  // }
+const getAddress = (e) => {
+  pickup.value = e;
+  dialog.value = false;
 };
-</script> -->
+const dropOffAddress = (e) => {
+  dropoff.value = e;
+  dialog.value = false;
+};
+const addStop = (e) => {
+  stops.value.push(e);
+  addStopField.value = true;
+};
+const dialog = ref(false);
+</script>
