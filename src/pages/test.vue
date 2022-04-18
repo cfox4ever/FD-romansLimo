@@ -39,7 +39,7 @@ banner
   <q-btn label="Pickup Location" color="primary" @click="dialog = true" />
  <q-dialog v-model="dialog"        >
       <q-card style="width: 700px; max-width: 80vw;">
-        <Address/>
+        <Address />
       </q-card>
     </q-dialog>
 </div>

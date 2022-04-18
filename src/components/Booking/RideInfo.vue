@@ -168,67 +168,17 @@
             </q-input>
           </div>
         </div>
-                                                      <!-- DISPLAYING DESTINATIONS  -->
-        <div class="row">
-          <div v-for="s in pickup">{{ s }} ,</div>
-        </div>
-        <div v-for="(stop, index) in stops">
-          <q-btn rounded color="amber-12" class="text-black q-ma-xs" icon="flag">
-            Stop # {{ index + 1 }} -- >  <div v-for="s in stop">{{ s }} ,</div>
-            <q-icon name="delete" color="red" />
-          </q-btn>
-          
-        </div>
-        <div class="row">
-          <div v-for="s in dropoff">{{ s }} ,</div>
-        </div>
+        <!-- DISPLAYING DESTINATIONS  -->
+       
 
         <!-- PICKUP LOCATION  -->
-        <q-separator color="white" inset />
-
-        <q-btn
-          label="Pickup Location"
-          rounded
-          color="amber-12"
-          class="text-black q-ma-xs"
-          @click="dialog = true"
-          icon="location_on"
-        />
-        <q-dialog v-model="dialog">
-          <q-card style="width: 700px; max-width: 80vw">
-            <Address @formData="getAddress" />
-          </q-card>
-        </q-dialog>
-
-        <!-- ADD STOP  -->
-        <q-btn
-          label="Add Stop"
-          rounded
-          color="amber-12"
-          class="text-black q-ma-xs"
-          @click="dialog = true"
-          icon="flag"
-        />
-        <q-dialog v-model="dialog">
-          <q-card style="width: 700px; max-width: 80vw">
-            <Address @formData="addStop" />
-          </q-card>
-        </q-dialog>
-
-        <!-- DROP OFF  -->
-        <q-btn
-          label="Drop Off Location"
-          rounded
-          color="amber-12"
-          class="text-black q-ma-xs"
-          @click="dialog = true"
-          icon="do_not_disturb_on"
-        />
-        <q-dialog v-model="dialog">
-          <q-card style="width: 700px; max-width: 80vw">
-            <Address @formData="dropOffAddress" />
-          </q-card>
-        </q-dialog>
+       <q-stepper
+      v-model="ride"
+      ref="stepper"
+      color="primary"
+      animated
+    >
+       </q-stepper>
 
         <div class="row">
           <div class="col">
@@ -322,7 +272,7 @@
 import { ref } from "vue";
 
 import Address from "./Address.vue";
-
+const ride = ref(1)
 const timeStamp = Date.now();
 
 const stops = ref([]);
@@ -366,8 +316,7 @@ const dateOptions = (fdate) => {
   return fdate >= today;
 };
 const getAddress = (e) => {
-  pickup.value = e;
-  dialog.value = false;
+  console.log(e)
 };
 const dropOffAddress = (e) => {
   dropoff.value = e;
@@ -377,5 +326,5 @@ const addStop = (e) => {
   stops.value.push(e);
   addStopField.value = true;
 };
-const dialog = ref(false);
+
 </script>
