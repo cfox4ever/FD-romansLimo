@@ -23,9 +23,9 @@
 
     <q-toolbar>
       <q-toolbar-title class="absolute-center">
-        <br />
+       
         <span
-          class="text-amber-12 text-h3 text-center cursor-pointer title-font"
+          class="text-amber-12 text-h4 text-center cursor-pointer title-font"
           size="lg"
           @click="goHome"
           >Roman's Limo</span
@@ -33,7 +33,7 @@
         <q-tooltip class="bg-dark text-amber-12" :offset="[5, 5]"
           >🌟🌟🌟🌟🌟</q-tooltip
         >
-        <q-avatar size="100px" @click="goHome" class="cursor-pointer">
+        <q-avatar size="50px" @click="goHome" class="cursor-pointer">
           <img src="../../assets/RL.png" />
         </q-avatar>
       </q-toolbar-title>
