@@ -1,60 +1,68 @@
 <template>
-    <q-toolbar>
-        <q-btn color="amber" icon="menu">
-        <q-menu 
+  <q-tabs>
+    <q-btn color="amber" icon="menu">
+      <q-menu
         fit
-        class="bg-dark text-amber" 
-          transition-show="rotate"
-          transition-hide="rotate"
+        class="bg-dark text-amber"
+        transition-show="rotate"
+        transition-hide="rotate"
+      >
+        <q-tabs bg-dark class="text-yellow-12" vertical>
+          <q-route-tab to="getaquote" label="Get A Quote" />
+          <q-route-tab to="services" label="Services" />
+          <q-route-tab to="fleet" label="Fleet" />
+          <q-route-tab to="testimonials" label="Testimonials" />
+          <q-route-tab to="login" label="Login / Register" />
+          <q-route-tab to="corporate" label="Corporate" />
+          <q-route-tab to="about" label="About" />
+          <q-route-tab to="faq" label="FAQ's" />
+          <q-route-tab to="contactus" label="Contact Us" />
+        </q-tabs>
+      </q-menu>
+    </q-btn>
+
+    <q-toolbar>
+      <q-toolbar-title class="absolute-center">
+        <br />
+        <span
+          class="text-amber-12 text-h3 text-center cursor-pointer title-font"
+          size="lg"
+          @click="goHome"
+          >Roman's Limo</span
         >
-          <q-list style="min-width: 100px">
-        
-            <q-item clickable>
-              <q-item-section>About</q-item-section>
-            </q-item>
-              <q-item clickable>
-              <q-item-section>FAQ's</q-item-section>
-            </q-item>
-              <q-item clickable>
-              <q-item-section>Fleet</q-item-section>
-            </q-item>
-              <q-item clickable>
-              <q-item-section>Get A Quote</q-item-section>
-            </q-item>
-               <q-item clickable>
-              <q-item-section>Services</q-item-section>
-            </q-item>
-               <q-item clickable>
-              <q-item-section>Testimonials</q-item-section>
-            </q-item>
-
-            <q-separator color="amber"/>
-            <q-item clickable>
-              <q-item-section>Contact Us</q-item-section>
-            </q-item>
-            <q-item clickable>
-              <q-item-section>Login / Register </q-item-section>
-            </q-item>
-          </q-list>
-        </q-menu>
-      </q-btn>
-
-
-        <q-toolbar-title class="q-pa-md row justify-center" color="amber" @click="goHome">
-            <span class="text-amber-12">
-                Roman's Limo
-                <q-icon name="time_to_leave" />
-            </span>
-        </q-toolbar-title>
+        <q-tooltip class="bg-dark text-amber-12" :offset="[5, 5]"
+          >🌟🌟🌟🌟🌟</q-tooltip
+        >
+        <q-avatar size="100px" @click="goHome" class="cursor-pointer">
+          <img src="../../assets/RL.png" />
+        </q-avatar>
+      </q-toolbar-title>
     </q-toolbar>
+  </q-tabs>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import { useRouter } from "vue-router";
+const router = useRouter();
 
-
-function goHome () {
-    router.push('/')
+function goHome() {
+  router.push("/");
 }
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
+.title-font {
+  font-family: "Satisfy", cursive;
+}
+</style>
+<style lang="sass" scoped>
+
+.logo-title
+
+    padding: 0
+    display: flex
+    justify-content: center
+    align-items: center
+    margin-left: auto
+    margin-right: auto
+</style>

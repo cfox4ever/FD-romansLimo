@@ -6,19 +6,19 @@
   <q-btn size="xlg" icon="phone" class="blink_text" ><a :href="'tel:'+pphone" > Call US  : {{phone}}</a></q-btn>  
     </div>
     <div class="col-12 col-md" >
-    <q-btn size="xlg" icon="email"  class="col"><a :href="'mailto:'+mail">Email US : {{email}}</a></q-btn>
+    <q-btn size="xlg" icon="email"  class="col" v-if="$q.screen.width > 1023"><a :href="'mailto:'+mail">Email US : {{email}}</a></q-btn>
     </div>
     <div class="col-12 col-md" >
     
     <q-btn size="xlg" icon="star" to="/booking" class="col">BOOK ONLINE </q-btn>
     </div>
     <div class="col-12 col-md" >
-   <q-btn size="xlg" icon="person" to="/contactus" class="col">Contact Customer Service </q-btn>
+   <q-btn size="xlg" icon="person" to="/contactus" class="col" v-if="$q.screen.width > 1023">Contact Customer Service </q-btn>
     </div>
     </div> 
     <div class="row q-pa-md  bg-dark text-amber-12">
      <div class="col-12 col-md" >
-     <q-btn size="xlg" icon="security" to="/privacy-policy" class="col">Privacy Policy </q-btn>
+     <q-btn size="xlg" icon="security" to="/privacy-policy" class="col" v-if="$q.screen.width > 1023" >Privacy Policy </q-btn>
     </div>
     </div>
     

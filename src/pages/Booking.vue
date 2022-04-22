@@ -1,9 +1,9 @@
 <template>
-  <div class="q-pa">
+  <div >
     <q-stepper
       v-model="step"
       vertical
-      
+      keep-alive
       animated
       done-color="amber-12"
       active-color="dark"
@@ -32,8 +32,8 @@
         icon="directions_car"
         :done="step > 2"
       >
-        <RideInfo v-model="formData"/>
-THE FORM IS {{formData}}
+        <RideInfo v-model="formData" @sendingRideInfo="getRideInfo"/>
+
         <q-stepper-navigation>
           <q-btn @click="step = 3" color="dark" class="text-amber-12" label="Continue" />
           <q-btn flat @click="step = 1" color="dark"  label="Back" class="q-ml-sm text-dark" />
@@ -67,6 +67,7 @@ THE FORM IS {{formData}}
         </q-stepper-navigation>
       </q-step>
     </q-stepper>
+    {{formData}}
   </div>
 </template>
 
@@ -85,4 +86,8 @@ const HideLoginForm = () => {
   step.value = 2
 }
 const formData = ref([])
+const getRideInfo = (data) => {
+  formData.value = data
+  step.value = 3
+}
 </script>
